@@ -476,10 +476,10 @@ const Plugin = () => {
       console.log(`Appearance CSS path = ${AppearanceStylePath}`);
       console.log(`AnimateCSS CSS path = ${AnimateCSSPath}`);
     }
-
-    loadStyle(AnimateCSSPath, 'stylesheet', function () {
-      loadStyle(AppearanceStylePath, 'stylesheet');
-    });
+// Turn off auto-load 'animate.css' library
+//     loadStyle(AnimateCSSPath, 'stylesheet', function () {
+//       loadStyle(AppearanceStylePath, 'stylesheet');
+//     });
     appear(deck, options);
   };
 
