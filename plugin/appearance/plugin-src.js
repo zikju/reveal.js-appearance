@@ -17,9 +17,9 @@ const Plugin = () => {
 				callback = null;
 			}
 		};
-	
+
 		style.onload = finish;
-	
+
 		style.onreadystatechange = function () {
 			if (this.readyState === 'loaded') {
 				finish();
@@ -63,7 +63,7 @@ const Plugin = () => {
 	function copyDataAttributes(source, target, not) {
 		[...source.attributes].filter( attr => attr.nodeName.indexOf('data') > -1).forEach( attr => {
 			if ((not && attr.nodeName !== not) || !not) {
-				target.setAttribute(attr.nodeName, attr.nodeValue) 
+				target.setAttribute(attr.nodeName, attr.nodeValue)
 			}
 		})
 	}
@@ -98,7 +98,7 @@ const Plugin = () => {
 			let warning = kind == 'global' ? `JSON Parse error, please try to correct the global "autoelements" option.` : `JSON Parse error, please try to correct the "data-autoappear" attribute on section ${index}`;
 
 			if (typeof str === "string") str = str.replace(/[“”]/g,'"').replace(/[‘’]/g,"'");
-	
+
 			let strJSON = isJSON(str) ? str : typeof str === "object" ? JSON.stringify(str, null, 2) : str.trim().replace(/'/g, '"').charAt(0) === "{" ? str.trim().replace(/'/g, '"') : `{${str.trim().replace(/'/g, '"')}}`;
 
 
@@ -106,9 +106,9 @@ const Plugin = () => {
 				console.log(warning);
 			} else {
 				let elementsToAnimate = JSON.parse(strJSON);
-	
+
 				for (const [element, assignables] of Object.entries(elementsToAnimate)) {
-	
+
 					let elementsInSection = section.querySelectorAll(element);
 
 					elementsInSection.forEach(elementInSection => {
@@ -118,20 +118,20 @@ const Plugin = () => {
 							elementInSection.dataset["autoappear"] = true;
 
 							let newClasses = [], newDelay = null, speedClass = false;
-	
+
 							if (Array.isArray(assignables)) {
 								newClasses = assignables[0].split(/[ ,]+/);
 								newDelay = assignables[1];
 							} else if (typeof assignables == "string"){
 								newClasses = assignables.split(/[ ,]+/);
 							}
-	
+
 							speedClasses.forEach(speed => {
 								if (elementInSection.classList.contains(speed)) {
 									speedClass = speed;
 								}
 							})
-	
+
 							let classesToRemove = [];
 							elementInSection.classList.forEach(currentClass => {
 								if (String(currentClass).includes("animate__")) {
@@ -139,14 +139,14 @@ const Plugin = () => {
 								}
 							})
 							classesToRemove.forEach(currentClass => {elementInSection.classList.remove(currentClass)});
-	
+
 							newClasses.forEach(newClass => {
 								if (speedClasses.includes(newClass)) {
 									// There is a speed class from JSON to be assigned
 									if (speedClass) { speedClass = newClass }
 								}
 							});
-	
+
 							newClasses.forEach(newClass => {
 								elementInSection.classList.add(newClass);
 							});
@@ -154,14 +154,14 @@ const Plugin = () => {
 							if (speedClass) {
 								elementInSection.classList.add(speedClass);
 							}
-	
 
 
-							
+
+
 							if (newDelay) {
 								elementInSection.dataset.delay = newDelay;
 							}
-	
+
 							elementInSection.classList.add(baseclass);
 
 						}
@@ -220,7 +220,7 @@ const Plugin = () => {
 					if ( !(excludes.indexOf(appearance) > -1 )  ) {
 						if ((index == 0 && appearance.dataset.delay) || index !=0) {
 
-							let elementDelay = options.delay; 
+							let elementDelay = options.delay;
 							if (appearance.dataset && appearance.dataset.delay) {
 								elementDelay = parseInt(appearance.dataset.delay);
 							}
@@ -234,7 +234,7 @@ const Plugin = () => {
 									let firstNestedAppearance = appearance.querySelectorAll(`.${baseclass}`)[0];
 
 									if (firstNestedAppearance) {
-										let elementDelay = options.delay; 
+										let elementDelay = options.delay;
 										if (firstNestedAppearance.dataset && firstNestedAppearance.dataset.delay) {
 											elementDelay = parseInt(firstNestedAppearance.dataset.delay);
 										}
@@ -304,7 +304,7 @@ const Plugin = () => {
 		sections.forEach(section => {
 			findAppearancesIn(section, appearanceSelector, fragmentSelector);
 		})
-	
+
 		fragments.forEach(fragment => {
 			findAppearancesIn(fragment, appearanceSelector, fragmentSelector);
 		})
@@ -352,7 +352,7 @@ const Plugin = () => {
 						}
 					}
 				}
-				
+
 				if (event.type == 'slidechanged' && document.body.dataset.exitoverview) {
 					if (options.hideagain) {
 						delete slides.from?.dataset.appearanceCanStart;
@@ -366,7 +366,7 @@ const Plugin = () => {
 					setTimeout(function () {
 						document.body.removeAttribute('data-exitoverview')
 					}, 500)
-		
+
 					if (event.currentSlide ) {
 						if (options.hideagain) {
 							delete slides.from?.dataset.appearanceCanStart;
@@ -434,11 +434,11 @@ const Plugin = () => {
 			console.log(`Appearance CSS path = ${AppearanceStylePath}`);
 			console.log(`AnimateCSS CSS path = ${AnimateCSSPath}`);
 		}
-		
-		// Turn off auto-load 'animate.css' library
-// 		loadStyle(AnimateCSSPath, 'stylesheet', function () {
-// 			loadStyle(AppearanceStylePath, 'stylesheet');
-// 		});
+
+		// Turn off autoload of 'animate.css' library
+		// loadStyle(AnimateCSSPath, 'stylesheet', function () {
+		// 	loadStyle(AppearanceStylePath, 'stylesheet');
+		// });
 
 		appear(deck, options);
 	};
