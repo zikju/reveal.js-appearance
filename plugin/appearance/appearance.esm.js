@@ -3,14 +3,14 @@
  * @author: Martijn De Jongh (Martino), martijn.de.jongh@gmail.com
  * https://github.com/Martinomagnifico
  *
- * Appearance.js for Reveal.js 
+ * Appearance.js for Reveal.js
  * Version 1.2.0
- * 
- * @license 
+ *
+ * @license
  * MIT licensed
  *
  * Thanks to:
- *  - Hakim El Hattab, Reveal.js 
+ *  - Hakim El Hattab, Reveal.js
  *  - Daniel Eden, Animate.css
  ******************************************************************/
 
@@ -476,10 +476,13 @@ const Plugin = () => {
       console.log(`Appearance CSS path = ${AppearanceStylePath}`);
       console.log(`AnimateCSS CSS path = ${AnimateCSSPath}`);
     }
-// Turn off auto-load 'animate.css' library
-//     loadStyle(AnimateCSSPath, 'stylesheet', function () {
-//       loadStyle(AppearanceStylePath, 'stylesheet');
-//     });
+
+    // Turn off autoload of 'animate.css' library
+    // loadStyle(AnimateCSSPath, 'stylesheet', function () {
+    // 	loadStyle(AppearanceStylePath, 'stylesheet');
+    // });
+    loadStyle(AppearanceStylePath, 'stylesheet');
+
     appear(deck, options);
   };
 
